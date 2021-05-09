@@ -1,0 +1,19 @@
+java {
+  sourceCompatibility = JavaVersion.VERSION_11
+  targetCompatibility = JavaVersion.VERSION_11
+}
+
+compileJava {
+  options.compilerArgs = [
+    "-Xlint:unchecked",
+    "-Xlint:deprecation"
+  ]
+}
+
+processResources {
+  expand(project.properties)
+}
+
+processTestResources {
+  expand(project.properties)
+}

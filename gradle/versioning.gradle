@@ -1,0 +1,46 @@
+// Configure version of our service
+scmVersion {
+  tag {
+    prefix = ''
+  }
+  versionCreator 'versionWithBranch'
+}
+project.version = scmVersion.version
+
+// Generates a build-info.properties file that is exposed
+// by the '/actuator/info' endpoint.
+// https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/#integrating-with-actuator-build-info
+springBoot {
+  buildInfo()
+}
+
+// Configure gradle wrapper version
+wrapper {
+  // To upgrade gradle change this and run `gw wrapper`
+  gradleVersion = '6.7.1'
+  // complete Gradle distribution with binaries, sources and documentation
+  // enables better IntelliJ editor support
+  distributionType = Wrapper.DistributionType.ALL
+}
+
+// Filter suggested dependency updates
+dependencyUpdates {
+  revision = 'release'
+  checkForGradleUpdate = true
+  outputFormatter = "json"
+  outputDir = "build/dependencyUpdates"
+  reportfileName = "report"
+
+  resolutionStrategy {
+    componentSelection { rules ->
+      rules.all { ComponentSelection selection ->
+        boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm', 'preview', 'b', 'ea'].any { qualifier ->
+          selection.candidate.version ==~ /(?i).*[.-]$qualifier[.\d-+]*/
+        }
+        if (rejected) {
+          selection.reject('Release candidate')
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+dependencies {
+  implementation(
+    // Enables referencing AWS secrets in application.properties
+    // https://newengen.atlassian.net/wiki/spaces/~474558736/blog/2019/11/04/1030259251/AWS+Secrets+Spring+Boot+Starter
+    'com.newengen:secrets-spring-boot-starter:2.0.1',
+
+    // Authenticate requests using Vordt JWT bearer tokens
+    'com.newengen.vordt:vordt-client-spring:0.4.1',
+  )
+}

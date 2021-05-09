@@ -1,0 +1,11 @@
+dependencies {
+  // Metrics
+  // no version is specified for these dependencies so the versions
+  // provided by the Spring framework will be used.
+  implementation "io.micrometer:micrometer-core"
+  runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+
+  // Request logging / tracing
+  implementation 'org.zalando:logbook-spring-boot-starter:2.4.1'
+  implementation 'org.zalando:tracer-spring-boot-starter:0.17.2'
+}

@@ -1,0 +1,19 @@
+// Create an executable jar
+bootJar {
+  launchScript()
+}
+
+dependencies {
+  developmentOnly(
+    'org.springframework.boot:spring-boot-devtools',
+    'org.springframework.boot:spring-boot-properties-migrator',
+  )
+
+  implementation(
+    'org.springframework.boot:spring-boot-starter',
+    'org.springframework.boot:spring-boot-starter-web',
+    'org.springframework.boot:spring-boot-starter-validation',
+    'org.springframework.boot:spring-boot-starter-security',
+    'org.springframework.boot:spring-boot-starter-actuator',
+  )
+}

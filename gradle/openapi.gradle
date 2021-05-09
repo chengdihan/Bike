@@ -1,0 +1,6 @@
+// Swagger metadata and documentation
+// http://localhost:9200/starter/swagger-ui.html
+dependencies {
+  implementation 'org.springdoc:springdoc-openapi-webmvc-core:1.5.2'
+  implementation 'org.springdoc:springdoc-openapi-ui:1.5.2'
+}

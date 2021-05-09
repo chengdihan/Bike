@@ -1,0 +1,55 @@
+plugins {
+  id "java"
+  id "maven-publish"
+
+  // Spring Boot
+  id "org.springframework.boot" version "2.4.1"
+  id "io.spring.dependency-management" version "1.0.10.RELEASE"
+
+  // release/version management
+  id "pl.allegro.tech.build.axion-release" version "1.12.1"
+
+  // Generates git metadata properties which are exposed via the info actuator endpoint
+  id "com.gorylenko.gradle-git-properties" version "2.2.3"
+
+  // Checks dependency versions and reports available updates
+  id "com.github.ben-manes.versions" version "0.36.0"
+
+  // Lombok code generation
+  id "io.freefair.lombok" version "5.3.0"
+}
+
+group = "com.newengen"
+description = "Starter Service"
+
+defaultTasks "clean", "build"
+
+// Apply gradle configurations common to all services
+apply from: 'gradle/java.gradle'
+apply from: 'gradle/versioning.gradle'
+apply from: 'gradle/repositories.gradle'
+apply from: 'gradle/monitoring.gradle'
+apply from: 'gradle/security.gradle'
+apply from: 'gradle/openapi.gradle'
+apply from: 'gradle/springboot.gradle'
+apply from: 'gradle/tests.gradle'
+
+// Add or remove dependencies specific to your service here
+dependencies {
+  // The starter service comes with examples for accessing SQL databases
+  // If your service does not use a SQL database, remove this dependency
+  // as well as the runtimeOnly dependencies bellow
+  // NOTE: spring framework dependencies and most SQL connectors don't
+  // need to specify a version because the io.spring.dependency-management
+  // plugin takes care of resolving the version
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+  runtimeOnly 'com.h2database:h2'
+  runtimeOnly 'mysql:mysql-connector-java'
+
+  // AWS services
+  implementation platform('software.amazon.awssdk:bom:2.15.54')
+  // Add your dependencies for specific AWS services here. Ex:
+  // You don't need to specify the version numbers because they
+  // are referenced in the BOM above
+  // implementation 'software.amazon.awssdk:s3'
+}

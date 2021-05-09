@@ -1,0 +1,51 @@
+apply plugin: 'jacoco'
+
+dependencies {
+  // Spring Boot testing framework
+  testImplementation 'org.springframework.security:spring-security-test'
+  testImplementation('org.springframework.boot:spring-boot-starter-test') {
+    // All tests should be using JUnit 5 so the JUnit 4 adapter is not needed.
+    // Spring will autoconfigure to use JUnit 5 when this dependency is not present.
+    exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+  }
+
+  // Fake data generation (https://github.com/DiUS/java-faker)
+  testImplementation 'com.github.javafaker:javafaker:1.0.2'
+}
+
+test {
+  finalizedBy jacocoTestReport
+
+  testLogging {
+    events = ['passed', 'failed']
+  }
+
+  useJUnitPlatform{
+    // Tag your tests Unit, Integration, Fast, Slow, however you want and
+    // then pass include/exclude parameters when invoking the gradle build
+    //
+    //    ./gradlew clean test -DincludeTests='Fast'
+    //    ./gradlew clean test -DexcludeTests='Slow'
+    //
+    // By default all tests are run
+    String itags = System.getProperty("includeTests", null)
+    String etags = System.getProperty("excludeTests", null)
+    if (itags != null) includeTags(itags)
+    if (etags != null) excludeTags(etags)
+  }
+}
+
+jacocoTestReport {
+  dependsOn test
+
+  reports {
+    html.enabled true
+  }
+}
+build.dependsOn jacocoTestReport
+
+gradle.buildFinished {
+  println()
+  println("Test run report: file://${test.reports.html.destination.absolutePath}/index.html")
+  println("Code coverage report: file://${jacocoTestReport.reports.html.destination.absolutePath}/index.html")
+}
