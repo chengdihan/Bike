@@ -19,26 +19,23 @@ plugins {
   id "io.freefair.lombok" version "5.3.0"
 }
 
-group = "com.newengen"
-description = "Starter Service"
+group = "com.example.bike"
+description = "Bike Service"
 
 defaultTasks "clean", "build"
 
 // Apply gradle configurations common to all services
 apply from: 'gradle/java.gradle'
 apply from: 'gradle/versioning.gradle'
-apply from: 'gradle/repositories.gradle'
 apply from: 'gradle/monitoring.gradle'
 apply from: 'gradle/security.gradle'
 apply from: 'gradle/openapi.gradle'
 apply from: 'gradle/springboot.gradle'
 apply from: 'gradle/tests.gradle'
+apply from: 'gradle/repositories.gradle'
 
 // Add or remove dependencies specific to your service here
 dependencies {
-  // The starter service comes with examples for accessing SQL databases
-  // If your service does not use a SQL database, remove this dependency
-  // as well as the runtimeOnly dependencies bellow
   // NOTE: spring framework dependencies and most SQL connectors don't
   // need to specify a version because the io.spring.dependency-management
   // plugin takes care of resolving the version
@@ -48,8 +45,22 @@ dependencies {
 
   // AWS services
   implementation platform('software.amazon.awssdk:bom:2.15.54')
+
   // Add your dependencies for specific AWS services here. Ex:
   // You don't need to specify the version numbers because they
   // are referenced in the BOM above
   // implementation 'software.amazon.awssdk:s3'
+  implementation 'software.amazon.awssdk:s3'
+  implementation 'com.amazonaws:aws-java-sdk-secretsmanager:1.11.753'
+  implementation 'com.amazonaws:aws-java-sdk:1.11.443'
+
+  implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+  implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+  implementation group: 'commons-validator', name: 'commons-validator', version: '1.4.0'
+
+  implementation group: 'org.jasypt', name: 'jasypt', version: '1.9.0'
+
+  implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+  implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
 }

@@ -1,0 +1,5 @@
+package com.example.bike.dal;
+
+public class Constants {
+    public static final String TEST_USER = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJBVVRIX0tFWSI6IlVzZXIsU3VwZXJBZG1pbiIsInN1YiI6ImFkbWluIiwiQVVUSF9SRVBPIjoiVXNlciIsImV4cCI6MTYyNTI3Njc5MiwiaWF0IjoxNjI0NjcxOTkyfQ.gO-0kk5Q-yjmQmFc50juDogGPmhS0zo1w-IH5EkOQzPX5F7kwqDIOzD5Npq7eGBwZeWgVNvZQZrD4upA4k3eiA";
+}

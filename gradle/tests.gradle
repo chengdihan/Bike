@@ -11,6 +11,8 @@ dependencies {
 
   // Fake data generation (https://github.com/DiUS/java-faker)
   testImplementation 'com.github.javafaker:javafaker:1.0.2'
+
+  testImplementation group: 'org.yaml', name: 'snakeyaml', version: '1.20'
 }
 
 test {

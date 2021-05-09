@@ -1,52 +1,6 @@
-def newEngenRepo(String repoUrl) {
-  return {
-    url repoUrl
-    if (System.getenv('BUILD_ID') == null) {
-      credentials(AwsCredentials) {
-        accessKey AWS_ACCESS_KEY
-        secretKey AWS_SECRET_KEY
-      }
-    } else {
-      authentication {
-        awsIm(AwsImAuthentication)
-      }
-    }
-  }
-}
 
 repositories {
   mavenLocal()
-  maven newEngenRepo("s3://artifacts.newengen.com/release")
   mavenCentral()
   jcenter()
-}
-
-publishing {
-  publications {
-    //noinspection GroovyAssignabilityCheck
-    springBootJar(MavenPublication) { MavenPublication pub ->
-      pub.artifact bootJar
-    }
-  }
-  repositories {
-    if (version.endsWith('SNAPSHOT')) {
-      maven newEngenRepo("s3://artifacts.newengen.com/snapshot")
-    } else {
-      maven newEngenRepo("s3://artifacts.newengen.com/release")
-    }
-  }
-}
-
-tasks.publish.doLast() {
-  if (!version.endsWith('SNAPSHOT')) {
-    def baseSrcUrl = "s3://artifacts.newengen.com/release/com/newengen/"
-    def baseDstUrl = "s3://artifacts.newengen.com/current/com/newengen/"
-    def srcJarUrl = baseSrcUrl + rootProject.name + "/" + version + "/" + rootProject.name + "-" + version + ".jar"
-    def dstJarUrl = baseDstUrl + rootProject.name + "/" + rootProject.name + ".jar"
-    println 'Updating current JAR from: ' + srcJarUrl + ' to: ' + dstJarUrl
-    exec {
-      executable 'aws'
-      args 's3', 'cp', srcJarUrl, dstJarUrl
-    }
-  }
 }
